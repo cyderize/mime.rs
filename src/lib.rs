@@ -21,6 +21,7 @@
 #![doc(html_root_url = "http://hyperium.github.io/mime.rs")]
 #![experimental]
 #![feature(macro_rules, phase)]
+#![deny(warnings)]
 
 #[phase(plugin, link)]
 extern crate log;
@@ -172,7 +173,7 @@ impl fmt::Show for Mime {
 
 impl FromStr for Mime {
     fn from_str(raw: &str) -> Option<Mime> {
-        let ascii = raw.to_ascii_lower(); // lifetimes :(
+        let ascii = raw.to_ascii_lowercase(); // lifetimes :(
         let raw = ascii.as_slice();
         let len = raw.len();
         let mut iter = raw.chars().enumerate();
@@ -402,6 +403,6 @@ mod tests {
     fn bench_from_str(b: &mut Bencher) {
         let s = "text/plain; charset=utf-8; foo=bar";
         b.bytes = s.as_bytes().len() as u64;
-        b.iter(|| from_str::<Mime>(s))
+        b.iter(|| s.parse::<Mime>())
     }
 }
