@@ -66,13 +66,13 @@ macro_rules! inspect(
 ///     _ => ()
 /// }
 /// ```
-#[deriving(Clone, PartialEq)]
+#[derive(Clone, PartialEq)]
 pub struct Mime(pub TopLevel, pub SubLevel, pub Vec<Param>);
 
 macro_rules! enoom {
     (pub enum $en:ident; $ext:ident; $($ty:ident, $text:expr;)*) => (
 
-        #[deriving(Clone)]
+        #[derive(Clone)]
         pub enum $en {
             $($ty),*,
             $ext(String)
@@ -368,7 +368,7 @@ fn fmt_param(param: &Param, fmt: &mut fmt::Formatter) -> fmt::Result {
 
 #[cfg(test)]
 mod tests {
-    use std::str::{FromStr, from_str};
+    use std::str::FromStr;
     use test::Bencher;
     use super::{TopLevel, SubLevel, Attr, Value, Mime};
 
